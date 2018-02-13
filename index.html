@@ -52,21 +52,23 @@
 	<script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io.connect();
-  function fnc() {
-      var txtval = document.getElementById("txtchat").value;
-      if (txtval != "")
-          socket.emit("hello", txtval);     
+  function fnc(event) {
+      var txtval = document.getElementById("txtchat");
+      if (event.keyCode == 13 && txtval != "") {
+          socket.emit("hello", txtval.value);
+          txtval.value = "";
+      }
 
   }
-  socket.on('hello', function (socket) {
-      document.getElementById("divone").innerHTML += `<h1>${socket}</h1>`;
+  socket.on('hello', function (data) {
+      document.getElementById("divone").innerHTML += `<div style='padding:15px;height:30px;background-color:${data.bgcolor}'>${data.text}</div>`;
   });
 </script>
 </head>
 <body>
     <ul id="messages"></ul>
  
-        <input id="txtchat"   /><button onclick="fnc()">Send</button>
+        <input id="txtchat" style="width:40%;height:40px; border:1px solid silver;"  onkeypress="fnc(event)" />
 
     <div id="divone"></div>
    
