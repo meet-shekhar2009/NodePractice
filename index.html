@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <title>Real Time Programming</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 13px Helvetica, Arial;
+        }
+
+        form {
+            background: #000;
+            padding: 3px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+            form input {
+                border: 0;
+                padding: 10px;
+                width: 90%;
+                margin-right: .5%;
+            }
+
+            form button {
+                width: 9%;
+                background: rgb(130, 224, 255);
+                border: none;
+                padding: 10px;
+            }
+
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+            #messages li {
+                padding: 5px 10px;
+            }
+
+                #messages li:nth-child(odd) {
+                    background: #eee;
+                }
+    </style>
+	<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect("http://localhost:8080/");
+  function fnc() {
+      var txtval = document.getElementById("txtchat").value;
+      if (txtval != "")
+          socket.emit("hello", txtval);     
+
+  }
+  socket.on('hello', function (socket) {
+      document.getElementById("divone").innerHTML += `<h1>${socket}</h1>`;
+  });
+</script>
+</head>
+<body>
+    <ul id="messages"></ul>
+ 
+        <input id="txtchat"   /><button onclick="fnc()">Send</button>
+
+    <div id="divone"></div>
+   
+</body>
+</html>
