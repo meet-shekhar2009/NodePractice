@@ -52,9 +52,9 @@
 	<script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io.connect();
-  function fnc(event) {
+  function fnc(event,btnpress) {
       var txtval = document.getElementById("txtchat");
-      if (event.keyCode == 13 && txtval != "") {
+      if ((event.keyCode == 13 || btnpress) && txtval != "") {
           socket.emit("hello", txtval.value);
           txtval.value = "";
       }
@@ -69,6 +69,7 @@
     <ul id="messages"></ul>
  
         <input id="txtchat" style="width:40%;height:40px; border:1px solid silver;"  onkeypress="fnc(event)" />
+	<button onclick="fnc(event,true)">Send</button>
 
     <div id="divone"></div>
    
